@@ -1,0 +1,47 @@
+version: '2'
+services:
+  elasticsearch:
+    image: elasticsearch:5
+    ports:
+      - 9200:9200
+  logstash: 
+    build: 
+      context: logstash
+    depends_on:
+      - elasticsearch
+    privileged:      true
+    tty:             true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  kibana: 
+    build: 
+      context: kibana
+    ports:
+      - 5601:5601
+    privileged:      true
+    tty:             true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  manageiq:
+    build: manageiq
+    ports:
+      - 8443:443
+    privileged:      true
+    tty:             true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  zookeeper:
+      image: zookeeper
+      ports:
+        - 2181:2181
+  kafka:
+    build: kafka
+    depends_on:
+      - zookeeper
+
+  # prometheus:
+  #   image: prom/prometheus
+  #   ports:
+  #     - 9000:9000
+  #     - 9090:9090
+  #   

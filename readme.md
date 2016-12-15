@@ -6,7 +6,9 @@ Just because I can and want to learn something
 
 ### What?
 * Docker
-* Filebeats
+* Filebeat
+* Metricbeat
+* Kafka
 * Logstash
 * Elasticsearch
 * Kibana

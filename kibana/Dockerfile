@@ -4,6 +4,7 @@ ARG http_proxy
 ARG https_proxy
 
 ENV container docker
+ENV KIBANA_VERSION 5.1.1
 
 RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
     rm -f /lib/systemd/system/multi-user.target.wants/*;\
@@ -14,7 +15,7 @@ RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == system
     rm -f /lib/systemd/system/basic.target.wants/*;\
     rm -f /lib/systemd/system/anaconda.target.wants/*;
 
-RUN curl -o /root/kibana.rpm -L -O https://artifacts.elastic.co/downloads/kibana/kibana-5.0.2-x86_64.rpm
+RUN curl -o /root/kibana.rpm -L -O https://artifacts.elastic.co/downloads/kibana/kibana-$KIBANA_VERSION-x86_64.rpm
 RUN yum localinstall -y /root/kibana.rpm
 COPY kibana.yml /etc/kibana/kibana.yml
 

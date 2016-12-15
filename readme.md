@@ -34,3 +34,6 @@ Fri Dec  9 14:25:29 UTC 2016
 if its totally off... just restart your docker-machine/docker for mac or windows
 
 If this is not the case... I probably messed up, please send me a message
+
+### Credits
+manageiq grok pattern: https://github.com/ldomb/elkformiqonrhel7

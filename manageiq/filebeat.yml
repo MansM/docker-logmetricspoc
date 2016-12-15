@@ -21,6 +21,8 @@ filebeat.prospectors:
   paths:
     - /var/www/miq/vmdb/log/*.log
   exclude_files: [".gz$", "yum.log"]
+  fields:
+    business_app: manageiq
 
 - input_type: log
   paths:
@@ -82,9 +84,9 @@ filebeat.prospectors:
   #password: "changeme"
 
 #----------------------------- Logstash output --------------------------------
-output.logstash:
-  # The Logstash hosts
-  hosts: ["logstash:5044"]
+# output.logstash:
+#   # The Logstash hosts
+#   hosts: ["logstash:5044"]
 
   # Optional SSL. By default is off.
   # List of root certificates for HTTPS server verifications
@@ -96,6 +98,21 @@ output.logstash:
   # Client Certificate Key
   #ssl.key: "/etc/pki/client/cert.key"
 
+
+output.kafka:
+  # initial brokers for reading cluster metadata
+  hosts: ["kafka:9092"]
+  #index: filebeat
+
+  # message topic selection + partitioning
+  topic: '%{[type]}'
+  partition.round_robin:
+    reachable_only: false
+
+  required_acks: 1
+  compression: gzip
+  max_message_bytes: 1000000
+
 #================================ Logging =====================================
 
 # Sets log level. The default log level is info.
@@ -106,3 +123,4 @@ output.logstash:
 # To enable all selectors use ["*"]. Examples of other selectors are "beat",
 # "publish", "service".
 #logging.selectors: ["*"]
+

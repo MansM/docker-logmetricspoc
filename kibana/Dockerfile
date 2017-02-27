@@ -4,7 +4,7 @@ ARG http_proxy
 ARG https_proxy
 
 ENV container docker
-ENV KIBANA_VERSION 5.1.1
+ENV KIBANA_VERSION 5.2.1
 
 RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
     rm -f /lib/systemd/system/multi-user.target.wants/*;\
